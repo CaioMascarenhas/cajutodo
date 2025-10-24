@@ -16,6 +16,17 @@ import {
   Typography,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import MovieIcon from "@mui/icons-material/Movie";
+import TvIcon from "@mui/icons-material/Tv";
+import PlaceIcon from "@mui/icons-material/Place";
+import RestaurantIcon from "@mui/icons-material/Restaurant";
+import Filmes from "../components/Filmes";
+import Restaurantes from "../components/Restaurantes";
+import Series from "../components/Series";
+import Lugares from "../components/lugares";
+import Aleatorios from "../components/Aleatorios";
+import { Quiz } from "@mui/icons-material";
+
 
 const drawerWidth = 240;
 
@@ -31,7 +42,35 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   };
 
 
-  const menuItems = [ "Filmes", "Séries", "Lugares", "Restaurantes"];
+  const menuItems = [
+    {
+      label: "Filmes",
+      icon: <MovieIcon sx={{ color: '#e53935' }} />, // vermelho
+      component: <Filmes />,
+    },
+    {
+      label: "Séries",
+      icon: <TvIcon sx={{ color: '#8e24aa' }} />, // roxo
+      component: <Series />,
+    },
+    {
+      label: "Lugares",
+      icon: <PlaceIcon sx={{ color: '#039be5' }} />, // azul claro
+      component: <Lugares />,
+    },
+    {
+      label: "Restaurantes",
+      icon: <RestaurantIcon sx={{ color: '#43a047' }} />, // verde
+      component: <Restaurantes />,
+    },
+    {
+      label: "Aleatorios",
+      icon: <Quiz sx={{ color: '#fbc02d' }} />, // amarelo
+      component: <Aleatorios />,
+    },
+  ];
+
+  const [selectedIndex, setSelectedIndex] = React.useState(0);
 
   const drawer = (
     <div>
@@ -42,10 +81,17 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       </Toolbar>
       <Divider />
       <List>
-        {menuItems.map((text) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemText primary={text} />
+        {menuItems.map((item, index) => (
+          <ListItem key={item.label} disablePadding>
+            <ListItemButton
+              selected={selectedIndex === index}
+              onClick={() => {
+                setSelectedIndex(index);
+                if (window.innerWidth < 600) setMobileOpen(false);
+              }}
+            >
+              {item.icon}
+              <ListItemText primary={item.label} sx={{ ml: 2 }} />
             </ListItemButton>
           </ListItem>
         ))}
@@ -76,7 +122,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            Painel Principal
+            Caju To-do
           </Typography>
         </Toolbar>
       </AppBar>
@@ -129,7 +175,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           mt: 8, // espaço abaixo do AppBar
         }}
       >
-        {/* {children} */}
+        {menuItems[selectedIndex].component}
       </Box>
     </Box>
   );
