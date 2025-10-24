@@ -16,6 +16,8 @@ import {
   Typography,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import HomeIcon from "@mui/icons-material/Home";
+import { useRouter } from "next/navigation";
 import MovieIcon from "@mui/icons-material/Movie";
 import TvIcon from "@mui/icons-material/Tv";
 import PlaceIcon from "@mui/icons-material/Place";
@@ -36,6 +38,7 @@ interface DashboardLayoutProps {
 
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const router = useRouter();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -121,9 +124,17 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
-            Caju To-do
+          <Typography variant="h6" noWrap sx={{ flexGrow: 1, fontWeight: 700 }}>
+            {menuItems[selectedIndex].label}
           </Typography>
+          <IconButton
+            color="inherit"
+            edge="end"
+            onClick={() => router.push("/")}
+            aria-label="Ir para Home"
+          >
+            <HomeIcon />
+          </IconButton>
         </Toolbar>
       </AppBar>
 
