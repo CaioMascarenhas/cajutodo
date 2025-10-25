@@ -67,7 +67,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       component: <Restaurantes />,
     },
     {
-      label: "Aleatorios",
+      label: "Aleatórios",
       icon: <Quiz sx={{ color: '#fbc02d' }} />, // amarelo
       component: <Aleatorios />,
     },

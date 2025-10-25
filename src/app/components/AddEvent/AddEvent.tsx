@@ -2,12 +2,14 @@ import { useState } from "react";
 import { Fab, Dialog, DialogContentText, DialogTitle, DialogActions, DialogContent, Button, TextField } from "@mui/material";
 import { supabase } from "@/lib/supabaseClient";
 import { Add } from "@mui/icons-material";
+import { useAlert } from "@/app/contexts/alertContext";
 
 interface Category {
     category: string;
+    triggerReload: () => void;
 }
 
-export default function AddEvent({ category }: Category) {
+export default function AddEvent({ category, triggerReload }: Category) {
 
     const [open, setOpen] = useState(false)
 
@@ -24,9 +26,17 @@ export default function AddEvent({ category }: Category) {
     const [descricao, setDescricao] = useState("");
     const [imagemFile, setImagemFile] = useState<File | null>(null);
 
+    const { showAlert } = useAlert();
+
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         let imageUrl = "";
+
+        if  (!imagemFile || titulo.trim() === "" || descricao.trim() === "") {
+            showAlert("Por favor, preencha todos os campos e selecione uma imagem.", "warning");
+            return;
+        }
+
         if (imagemFile) {
             const fileExt = imagemFile.name.split('.').pop();
             const fileName = `${Date.now()}-${Math.random().toString(36).substring(2, 8)}.${fileExt}`;
@@ -37,13 +47,21 @@ export default function AddEvent({ category }: Category) {
                 imageUrl = `${supabase.storage.from('imagens-eventos').getPublicUrl(fileName).data.publicUrl}`;
             }
         }
-        await supabase.from("eventos").insert({
+        const response = await supabase.from("eventos").insert({
             titulos: titulo,
             descricao,
             imagem: imageUrl,
             concluido: false,
             categoria: category,
         });
+
+        if (response.error) {
+            showAlert("Erro ao adicionar evento", "error");
+        } else {
+            showAlert("Evento adicionado com sucesso", "success");
+            triggerReload();
+        }
+
         setOpen(false);
         setTitulo("");
         setDescricao("");
@@ -107,7 +125,7 @@ export default function AddEvent({ category }: Category) {
                     </DialogContent>
                     <DialogActions className="flex justify-center gap-4 pb-2">
                         <Button onClick={handleClose} className="bg-gray-200 text-gray-700 rounded px-4 py-2">Cancelar</Button>
-                        <Button type="submit" className="bg-blue-600 text-white rounded px-4 py-2">Adicionar</Button>
+                        <Button type="submit" className="bg-blue-600 text-white rounded px-4 py-2" variant="contained">Adicionar</Button>
                     </DialogActions>
                 </form>
             </Dialog>

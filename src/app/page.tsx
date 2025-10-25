@@ -38,9 +38,15 @@ const Home = () => {
         >
           BEM VINDO(A) AO CAJU, TO-DO LIST!
         </h1>
+        <h3
+          className="text-white text-3xl md:text-5xl Exo font-extrabold uppercase text-center mb-8 drop-shadow-lg tracking-wide"
+          style={{ fontWeight: 900 }}
+        >
+          NOSSA LISTA DE AVENTURAS
+        </h3>
         <button
           onClick={() => router.push('/dashboard')}
-          className="bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold py-3 px-8 rounded-full shadow-lg transition-all text-lg"
+          className="bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold py-3 px-8 rounded-full shadow-lg transition-all text-lg cursor-pointer hover:scale-105 hover:shadow-xl"
         >
           Começar Jornada!
         </button>
