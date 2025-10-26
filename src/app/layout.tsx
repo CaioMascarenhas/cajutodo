@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Inter, Exo } from "next/font/google";
 import "./globals.css";
 import ThemeRegistry from "./contexts/themeProvider";
 import { AlertProvider } from "./contexts/alertContext";
+import { Analytics } from "@vercel/analytics/next"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -41,12 +42,13 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${inter.variable} ${geistSans.variable} ${geistMono.variable} ${exo.variable} antialiased`}
-      >
+      > 
         <AlertProvider>
           <ThemeRegistry>
             {children}
           </ThemeRegistry>
         </AlertProvider>
+        <Analytics />
       </body>
     </html>
   );
