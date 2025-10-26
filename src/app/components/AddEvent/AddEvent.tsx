@@ -25,15 +25,18 @@ export default function AddEvent({ category, triggerReload }: Category) {
     const [titulo, setTitulo] = useState("");
     const [descricao, setDescricao] = useState("");
     const [imagemFile, setImagemFile] = useState<File | null>(null);
+    const [disableButton, setDisableButton] = useState(false);
 
     const { showAlert } = useAlert();
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
+        setDisableButton(true);
         let imageUrl = "";
 
         if  (!imagemFile || titulo.trim() === "" || descricao.trim() === "") {
             showAlert("Por favor, preencha todos os campos e selecione uma imagem.", "warning");
+            setDisableButton(false);
             return;
         }
 
@@ -62,6 +65,7 @@ export default function AddEvent({ category, triggerReload }: Category) {
             triggerReload();
         }
 
+        setDisableButton(false);
         setOpen(false);
         setTitulo("");
         setDescricao("");
@@ -125,7 +129,7 @@ export default function AddEvent({ category, triggerReload }: Category) {
                     </DialogContent>
                     <DialogActions className="flex justify-center gap-4 pb-2">
                         <Button onClick={handleClose} className="bg-gray-200 text-gray-700 rounded px-4 py-2">Cancelar</Button>
-                        <Button type="submit" className="bg-blue-600 text-white rounded px-4 py-2" variant="contained">Adicionar</Button>
+                        <Button type="submit" className="bg-blue-600 text-white rounded px-4 py-2" variant="contained" disabled={disableButton}>Adicionar</Button>
                     </DialogActions>
                 </form>
             </Dialog>
