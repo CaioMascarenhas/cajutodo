@@ -74,7 +74,16 @@ export default function AddEvent({ category, triggerReload }: Category) {
 
     return (
         <>
-            <Fab color="primary" onClick={handleClickOpen} sx={{ position: 'absolute', right: 16, bottom: 16 }}>
+            <Fab
+                color="primary"
+                onClick={handleClickOpen}
+                sx={{
+                    position: 'fixed',
+                    right: 24,
+                    bottom: 24,
+                    zIndex: 1300 // acima do conteúdo principal
+                }}
+            >
                 <Add />
             </Fab>
             <Dialog open={open} onClose={handleClose}>
