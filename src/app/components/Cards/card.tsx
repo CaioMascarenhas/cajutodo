@@ -41,13 +41,13 @@ const Card: React.FC<CardProps> = ({ image, title, description, checked = false,
                             onChange={handleCheck}
                             className="form-checkbox h-5 w-5 text-blue-600"
                         />
-                        <span className="ml-2 text-sm text-gray-600">Aventura Concluída</span>
+                        <span className="ml-2 text-sm text-gray-600">Concluída!</span>
                     </label>
                 </div>
-                <p className="text-gray-600 text-base md:text-lg lg:text-xl">{description}</p>
+                <p className="text-gray-600 text-base md:text-lg lg:text-xl w-3/4">{description}</p>
             </div>
             { id && title && (
-                <div className="absolute bottom-4 right-4 z-20">
+                <div className="absolute bottom-1 right-4 z-20">
                     <DeleteEvent evento={{ id, titulos: title }} triggerReload={triggerReload} />
                 </div>
             )}
