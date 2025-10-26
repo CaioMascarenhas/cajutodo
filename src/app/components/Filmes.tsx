@@ -44,7 +44,7 @@ const Filmes = () => {
             }, 500);
         };
         fetchEventos();
-    }, [showConcluidos]);
+    }, [showConcluidos, reload]);
 
     if (loading) {
         return <>
