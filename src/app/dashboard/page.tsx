@@ -28,6 +28,7 @@ import Series from "../components/Series";
 import Lugares from "../components/lugares";
 import Aleatorios from "../components/Aleatorios";
 import { Quiz } from "@mui/icons-material";
+import Memorias from "../components/Memorias";
 
 
 const drawerWidth = 240;
@@ -70,6 +71,11 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       label: "Aleatórios",
       icon: <Quiz sx={{ color: '#fbc02d' }} />, // amarelo
       component: <Aleatorios />,
+    },
+    {
+      label: "Memórias",
+      icon: <Quiz sx={{ color: '#2196f3' }} />, // azul
+      component: <Memorias />,
     },
   ];
 
